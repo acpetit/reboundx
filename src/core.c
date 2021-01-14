@@ -86,6 +86,8 @@ void rebx_register_default_params(struct rebx_extras* rebx){
     rebx_register_param(rebx, "min_distance", REBX_TYPE_DOUBLE);
     rebx_register_param(rebx, "min_distance_from", REBX_TYPE_UINT32);
     rebx_register_param(rebx, "min_distance_orbit", REBX_TYPE_ORBIT);
+    rebx_register_param(rebx, "min_a", REBX_TYPE_DOUBLE);
+    rebx_register_param(rebx, "max_a", REBX_TYPE_DOUBLE);
     rebx_register_param(rebx, "luminosity", REBX_TYPE_DOUBLE);
     rebx_register_param(rebx, "tides_Omega", REBX_TYPE_DOUBLE);
     rebx_register_param(rebx, "tides_lambda2", REBX_TYPE_DOUBLE);
@@ -352,6 +354,10 @@ struct rebx_operator* rebx_load_operator(struct rebx_extras* const rebx, const c
     }
     else if (strcmp(name, "track_min_distance") == 0){
         operator->step_function = rebx_track_min_distance;
+        operator->operator_type = REBX_OPERATOR_RECORDER;
+    }
+    else if (strcmp(name, "track_minmax_a") == 0){
+        operator->step_function = rebx_track_minmax_a;
         operator->operator_type = REBX_OPERATOR_RECORDER;
     }
     else{
